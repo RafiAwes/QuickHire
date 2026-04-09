@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Poppins", sans-serif;
+  --font-sans: "Clash Display", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Clash Display", sans-serif;
   
   --color-primary: #4640DE;
   --color-primary-light: #E9EBFD;
