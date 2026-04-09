@@ -36,10 +36,10 @@ const JobCard: React.FC<JobCardProps> = ({ job, variant = 'list' }) => {
 
         <div className="flex flex-wrap gap-2">
           <span className="px-5 py-2 rounded-full bg-orange-50 text-orange-500 text-xs font-bold">
-            Marketing
+            {job.category}
           </span>
           <span className="px-5 py-2 rounded-full bg-green-50 text-green-500 text-xs font-bold">
-            Design
+            {job.level}
           </span>
         </div>
       </Link>
@@ -63,14 +63,14 @@ const JobCard: React.FC<JobCardProps> = ({ job, variant = 'list' }) => {
 
       <div className="flex flex-wrap justify-center md:justify-end gap-3">
         <span className="px-5 py-2 rounded-full bg-green-50 text-green-500 text-xs font-bold">
-          Full-Time
+          {job.type}
         </span>
         <div className="w-[1px] h-6 bg-gray-100 hidden md:block mx-2" />
         <span className="px-5 py-2 rounded-full border border-orange-100 text-orange-500 text-xs font-bold bg-orange-50/30">
-          Marketing
+          {job.category}
         </span>
         <span className="px-5 py-2 rounded-full border border-primary/10 text-primary text-xs font-bold bg-primary/5">
-          Design
+          {job.level}
         </span>
       </div>
     </Link>

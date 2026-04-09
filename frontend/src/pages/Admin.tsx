@@ -16,6 +16,7 @@ const jobSchema = z.object({
   description: z.string().min(10, 'Description is required'),
   type: z.string().min(2, 'Job type is required'),
   level: z.string().min(2, 'Experience level is required'),
+  logo: z.union([z.string().url('Must be a valid URL'), z.literal('')]).optional(),
 });
 
 type JobFormData = z.infer<typeof jobSchema>;
@@ -225,6 +226,19 @@ export default function Admin() {
                       placeholder="e.g. Tesla"
                     />
                     {errors.company && <p className="text-xs text-red-500 font-medium">{errors.company.message}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-text-main">Company Logo URL (Optional)</label>
+                    <input 
+                      {...register('logo')}
+                      className={cn(
+                        "w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all",
+                        errors.logo && "ring-2 ring-red-500"
+                      )}
+                      placeholder="e.g. https://logo.com/image.png"
+                    />
+                    {errors.logo && <p className="text-xs text-red-500 font-medium">{errors.logo.message}</p>}
                   </div>
 
                   <div className="space-y-2">
