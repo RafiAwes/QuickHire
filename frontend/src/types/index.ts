@@ -28,3 +28,14 @@ export interface Application {
   coverNote: string;
   appliedAt: string;
 }
+
+export interface TaxonomyItem {
+  id: number;
+  name: string;
+}
+
+export interface TaxonomyResponse {
+  categories: TaxonomyItem[];
+  jobTypes: TaxonomyItem[];
+  experienceLevels: TaxonomyItem[];
+}

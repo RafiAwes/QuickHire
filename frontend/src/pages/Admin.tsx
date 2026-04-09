@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'motion/react';
-import { Job } from '../types';
-import { jobApi } from '../lib/api';
+import { Job, TaxonomyResponse } from '../types';
+import { jobApi, taxonomyApi } from '../lib/api';
 import { cn } from '../lib/utils';
 
 const jobSchema = z.object({
@@ -14,14 +14,15 @@ const jobSchema = z.object({
   location: z.string().min(2, 'Location is required'),
   category: z.string().min(2, 'Category is required'),
   description: z.string().min(10, 'Description is required'),
-  type: z.enum(['Full-time', 'Part-time', 'Contract', 'Remote']),
-  level: z.enum(['Junior', 'Mid', 'Senior', 'Lead']),
+  type: z.string().min(2, 'Job type is required'),
+  level: z.string().min(2, 'Experience level is required'),
 });
 
 type JobFormData = z.infer<typeof jobSchema>;
 
 export default function Admin() {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [taxonomies, setTaxonomies] = useState<TaxonomyResponse>({ categories: [], jobTypes: [], experienceLevels: [] });
   const [isLoading, setIsLoading] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
 
@@ -49,8 +50,18 @@ export default function Admin() {
     }
   };
 
+  const fetchTaxonomies = async () => {
+    try {
+      const data = await taxonomyApi.getAll();
+      setTaxonomies(data);
+    } catch (error) {
+      console.error("Failed to fetch taxonomies:", error);
+    }
+  };
+
   useEffect(() => {
     fetchJobs();
+    fetchTaxonomies();
   }, []);
 
   const onDelete = async (id: string) => {
@@ -235,12 +246,9 @@ export default function Admin() {
                       {...register('category')}
                       className="w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
                     >
-                      <option value="Design">Design</option>
-                      <option value="Technology">Technology</option>
-                      <option value="Marketing">Marketing</option>
-                      <option value="Finance">Finance</option>
-                      <option value="Engineering">Engineering</option>
-                      <option value="Sales">Sales</option>
+                      {taxonomies.categories.map(c => (
+                        <option key={c.id} value={c.name}>{c.name}</option>
+                      ))}
                     </select>
                   </div>
 
@@ -250,10 +258,9 @@ export default function Admin() {
                       {...register('type')}
                       className="w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
                     >
-                      <option value="Full-time">Full-time</option>
-                      <option value="Part-time">Part-time</option>
-                      <option value="Contract">Contract</option>
-                      <option value="Remote">Remote</option>
+                      {taxonomies.jobTypes.map(t => (
+                        <option key={t.id} value={t.name}>{t.name}</option>
+                      ))}
                     </select>
                   </div>
 
@@ -263,10 +270,9 @@ export default function Admin() {
                       {...register('level')}
                       className="w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
                     >
-                      <option value="Junior">Junior</option>
-                      <option value="Mid">Mid</option>
-                      <option value="Senior">Senior</option>
-                      <option value="Lead">Lead</option>
+                      {taxonomies.experienceLevels.map(e => (
+                        <option key={e.id} value={e.name}>{e.name}</option>
+                      ))}
                     </select>
                   </div>
                 </div>

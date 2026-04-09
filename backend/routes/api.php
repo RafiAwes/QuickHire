@@ -8,5 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 use App\Http\Controllers\Api\JobListingController;
+use App\Http\Controllers\Api\TaxonomyController;
 
 Route::apiResource('jobs', JobListingController::class)->only(['index', 'store', 'destroy']);
+Route::get('/taxonomies', [TaxonomyController::class, 'index']);
