@@ -7,16 +7,7 @@ import CategoryCard from '../components/CategoryCard';
 import { Job, Category } from '../types';
 import { jobApi } from '../lib/api';
 
-const CATEGORIES: Category[] = [
-  { id: '1', name: 'Design', icon: 'Palette', jobCount: 235 },
-  { id: '2', name: 'Sales', icon: 'BarChart', jobCount: 756 },
-  { id: '3', name: 'Marketing', icon: 'Megaphone', jobCount: 140 },
-  { id: '4', name: 'Finance', icon: 'DollarSign', jobCount: 325 },
-  { id: '5', name: 'Technology', icon: 'Code', jobCount: 436 },
-  { id: '6', name: 'Engineering', icon: 'Settings', jobCount: 436 },
-  { id: '7', name: 'Business', icon: 'Briefcase', jobCount: 436 },
-  { id: '8', name: 'Human Resources', icon: 'Users', jobCount: 436 },
-];
+import { taxonomyApi } from '../lib/api';
 
 const PARTNERS = [
   { name: 'Vodafone', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/Vodafone_icon.svg' },
@@ -28,6 +19,7 @@ const PARTNERS = [
 
 export default function Home() {
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -79,7 +71,17 @@ export default function Home() {
         setIsLoading(false);
       }
     };
+    const fetchTaxonomies = async () => {
+      try {
+        const data = await taxonomyApi.getAll();
+        setCategories(data.categories);
+      } catch (error) {
+        console.error("Failed to fetch taxonomies:", error);
+      }
+    };
+
     fetchJobs();
+    fetchTaxonomies();
   }, []);
 
   return (
@@ -180,7 +182,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {CATEGORIES.map((category) => (
+            {categories.map((category) => (
               <CategoryCard key={category.id} category={category} />
             ))}
           </div>

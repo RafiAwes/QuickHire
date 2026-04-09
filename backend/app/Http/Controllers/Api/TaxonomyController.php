@@ -17,7 +17,9 @@ class TaxonomyController extends Controller
     public function index(): JsonResponse
     {
         return response()->json([
-            'categories' => Category::where('is_active', true)->get(['id', 'name']),
+            'categories' => Category::where('is_active', true)
+                ->withCount('jobListings as jobCount')
+                ->get(['id', 'name', 'icon']),
             'jobTypes' => JobType::where('is_active', true)->get(['id', 'name']),
             'experienceLevels' => ExperienceLevel::where('is_active', true)->get(['id', 'name'])
         ]);

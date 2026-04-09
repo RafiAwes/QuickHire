@@ -35,7 +35,7 @@ export interface TaxonomyItem {
 }
 
 export interface TaxonomyResponse {
-  categories: TaxonomyItem[];
+  categories: Category[];
   jobTypes: TaxonomyItem[];
   experienceLevels: TaxonomyItem[];
 }

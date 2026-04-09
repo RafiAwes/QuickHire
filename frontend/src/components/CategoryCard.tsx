@@ -1,6 +1,7 @@
 import React from 'react';
 import * as Icons from 'lucide-react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Category } from '../types';
 
 interface CategoryCardProps {
@@ -12,7 +13,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const IconComponent = (Icons as any)[category.icon] || Icons.Briefcase;
 
   return (
-    <div className="group bg-white p-8 rounded-2xl border border-gray-100 hover:bg-primary transition-all duration-300 cursor-pointer">
+    <Link to={`/jobs?category=${encodeURIComponent(category.name)}`} className="group bg-white p-8 rounded-2xl border border-gray-100 hover:bg-primary transition-all duration-300 cursor-pointer block">
       <div className="flex items-start justify-between mb-8">
         <div className="w-14 h-14 rounded-xl bg-primary/5 flex items-center justify-center text-primary group-hover:bg-white/20 group-hover:text-white transition-all duration-300">
           <IconComponent className="w-8 h-8" />
@@ -28,7 +29,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
         </p>
         <ArrowRight className="w-5 h-5 text-text-main group-hover:text-white transition-all transform group-hover:translate-x-1" />
       </div>
-    </div>
+    </Link>
   );
 };
 
