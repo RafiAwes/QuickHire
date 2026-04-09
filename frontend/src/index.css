@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Poppins", sans-serif;
+  
+  --color-primary: #4640DE;
+  --color-primary-light: #E9EBFD;
+  --color-secondary-bg: #F8F8FD;
+  --color-footer-bg: #202430;
+  --color-text-main: #25324B;
+  --color-text-muted: #7C8493;
+  --color-accent-blue: #26A4FF;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-text-main bg-white antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold;
+  }
+}
+
+.geometric-pattern {
+  background-image: linear-gradient(30deg, #4640DE 12%, transparent 12.5%, transparent 87%, #4640DE 87.5%, #4640DE),
+    linear-gradient(150deg, #4640DE 12%, transparent 12.5%, transparent 87%, #4640DE 87.5%, #4640DE),
+    linear-gradient(30deg, #4640DE 12%, transparent 12.5%, transparent 87%, #4640DE 87.5%, #4640DE),
+    linear-gradient(150deg, #4640DE 12%, transparent 12.5%, transparent 87%, #4640DE 87.5%, #4640DE),
+    linear-gradient(60deg, #4640DE 25%, transparent 25.5%, transparent 75%, #4640DE 75.5%, #4640DE),
+    linear-gradient(60deg, #4640DE 25%, transparent 25.5%, transparent 75%, #4640DE 75.5%, #4640DE);
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+  opacity: 0.03;
+}
+
+.underline-svg {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  color: #26A4FF;
+}
+
