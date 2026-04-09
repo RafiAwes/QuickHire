@@ -15,13 +15,14 @@ class JobListing extends Model
     protected $fillable = [
         'title',
         'slug',
+        'company',
+        'logo',
         'description',
         'category_id',
         'job_type_id',
         'experience_level_id',
-        'salary_range',
+        'salary',
         'location',
-        'is_remote',
         'is_active',
     ];
 

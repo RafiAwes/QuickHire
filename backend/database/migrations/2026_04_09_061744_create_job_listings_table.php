@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
+            $table->string('company');
+            $table->string('logo')->nullable();
             $table->longText('description');
             
             // Relations
@@ -22,9 +24,8 @@ return new class extends Migration
             $table->foreignId('job_type_id')->nullable()->constrained('job_types')->nullOnDelete();
             $table->foreignId('experience_level_id')->nullable()->constrained('experience_levels')->nullOnDelete();
             
-            $table->string('salary_range')->nullable();
+            $table->string('salary')->nullable();
             $table->string('location')->nullable();
-            $table->boolean('is_remote')->default(false);
             $table->boolean('is_active')->default(true);
             
             $table->timestamps();
