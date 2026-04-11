@@ -1,31 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import { Search, MapPin, Filter, Briefcase, ArrowRight } from 'lucide-react';
-import { Job } from '../types';
-import { jobApi } from '../lib/api';
+import { useSearchParams } from 'react-router-dom';
+import { Job, Category } from '../types';
+import { jobApi, taxonomyApi } from '../lib/api';
 import JobCard from '../components/JobCard';
 import { cn } from '../lib/utils';
 
-const CATEGORIES = ['All', 'Design', 'Technology', 'Marketing', 'Finance', 'Engineering', 'Sales'];
-
 export default function Jobs() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category') || 'All';
+
   const [jobs, setJobs] = useState<Job[]>([]);
+  const [categories, setCategories] = useState<string[]>(['All']);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedCategory, setSelectedCategory] = useState(categoryParam);
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    if (category === 'All') {
+      searchParams.delete('category');
+    } else {
+      searchParams.set('category', category);
+    }
+    setSearchParams(searchParams, { replace: true });
+  };
 
   useEffect(() => {
-    const fetchJobs = async () => {
+    const currentCategory = searchParams.get('category') || 'All';
+    if (currentCategory !== selectedCategory) {
+      setSelectedCategory(currentCategory);
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const data = await jobApi.getAll();
-        setJobs(data);
+        const [jobsData, taxData] = await Promise.all([
+          jobApi.getAll(),
+          taxonomyApi.getAll().catch(() => ({ categories: [] }))
+        ]);
+        setJobs(jobsData);
+        if (taxData && taxData.categories && taxData.categories.length > 0) {
+          setCategories(['All', ...taxData.categories.map((c: Category) => c.name)]);
+        } else {
+          setCategories(['All', 'Design', 'Technology', 'Marketing', 'Finance', 'Engineering', 'Sales']);
+        }
       } catch (error) {
-        console.error("Failed to fetch jobs:", error);
+        console.error("Failed to fetch data:", error);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchJobs();
+    fetchData();
   }, []);
 
   const filteredJobs = jobs.filter(job => {
@@ -73,9 +101,9 @@ export default function Jobs() {
               <select 
                 className="w-full outline-none text-text-main bg-transparent"
                 value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
+                onChange={(e) => handleCategoryChange(e.target.value)}
               >
-                {CATEGORIES.map(cat => (
+                {categories.map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
@@ -95,10 +123,10 @@ export default function Jobs() {
             <div>
               <h3 className="font-bold text-text-main mb-4">Categories</h3>
               <div className="space-y-2">
-                {CATEGORIES.map(cat => (
+                {categories.map(cat => (
                   <button
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => handleCategoryChange(cat)}
                     className={cn(
                       "w-full text-left px-4 py-2 rounded-lg text-sm font-medium transition-all",
                       selectedCategory === cat 
@@ -143,7 +171,7 @@ export default function Jobs() {
                     onClick={() => {
                       setSearchQuery('');
                       setLocationQuery('');
-                      setSelectedCategory('All');
+                      handleCategoryChange('All');
                     }}
                     className="mt-6 text-primary font-bold hover:underline"
                   >

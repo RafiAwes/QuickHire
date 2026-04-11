@@ -10,5 +10,5 @@ Route::get('/user', function (Request $request) {
 use App\Http\Controllers\Api\JobListingController;
 use App\Http\Controllers\Api\TaxonomyController;
 
-Route::apiResource('jobs', JobListingController::class)->only(['index', 'store', 'destroy']);
+Route::apiResource('jobs', JobListingController::class)->only(['index', 'store', 'show', 'destroy']);
 Route::get('/taxonomies', [TaxonomyController::class, 'index']);

@@ -50,9 +50,11 @@ class JobListingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): JsonResponse
     {
-        //
+        $job = JobListing::with(['category', 'jobType', 'experienceLevel'])->findOrFail($id);
+        
+        return response()->json(new JobListingResource($job));
     }
 
     /**

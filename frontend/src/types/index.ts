@@ -5,8 +5,8 @@ export interface Job {
   location: string;
   category: string;
   description: string;
-  type: 'Full-time' | 'Part-time' | 'Contract' | 'Remote';
-  level: 'Junior' | 'Mid' | 'Senior' | 'Lead';
+  type: string;
+  level: string;
   salary?: string;
   postedAt: string;
   logo?: string;
