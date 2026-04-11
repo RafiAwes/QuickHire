@@ -13,7 +13,13 @@
   "dependencies": {
     "@google/genai": "^1.48.0",
     "@hookform/resolvers": "^5.2.2",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.14",
+    "@tiptap/extension-link": "^3.22.3",
+    "@tiptap/extension-placeholder": "^3.22.3",
+    "@tiptap/extension-underline": "^3.22.3",
+    "@tiptap/react": "^3.22.3",
+    "@tiptap/starter-kit": "^3.22.3",
     "@vitejs/plugin-react": "^5.0.4",
     "axios": "^1.15.0",
     "clsx": "^2.1.1",

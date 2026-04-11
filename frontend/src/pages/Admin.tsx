@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Plus, Trash2, LayoutDashboard, Briefcase, Calendar, Building2, MapPin, X, Users } from 'lucide-react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'motion/react';
 import { Job, TaxonomyResponse, Application } from '../types';
 import { jobApi, taxonomyApi, applicationApi } from '../lib/api';
 import { cn } from '../lib/utils';
+import RichTextEditor from '../components/RichTextEditor';
 
 const jobSchema = z.object({
   title: z.string().min(2, 'Title is required'),
@@ -30,7 +31,7 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState<'jobs' | 'applications'>('jobs');
   const [applications, setApplications] = useState<Application[]>([]);
 
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<JobFormData>({
+  const { register, handleSubmit, reset, control, formState: { errors, isSubmitting } } = useForm<JobFormData>({
     resolver: zodResolver(jobSchema),
     defaultValues: {
       type: 'Full-time',
@@ -87,6 +88,7 @@ export default function Admin() {
       setJobs(jobs.filter(j => j.id !== id));
     } catch (error) {
       console.error("Delete failed:", error);
+      alert("Failed to delete the job. Please try again.");
     }
   };
 
@@ -385,15 +387,17 @@ export default function Admin() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-text-main">Job Description (HTML allowed)</label>
-                  <textarea 
-                    {...register('description')}
-                    rows={6}
-                    className={cn(
-                      "w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-primary outline-none transition-all resize-none",
-                      errors.description && "ring-2 ring-red-500"
+                  <label className="text-sm font-bold text-text-main">Job Description</label>
+                  <Controller
+                    name="description"
+                    control={control}
+                    render={({ field }) => (
+                      <RichTextEditor 
+                        value={field.value} 
+                        onChange={field.onChange} 
+                        placeholder="Describe the role, responsibilities, and requirements..."
+                      />
                     )}
-                    placeholder="Describe the role, responsibilities, and requirements..."
                   />
                   {errors.description && <p className="text-xs text-red-500 font-medium">{errors.description.message}</p>}
                 </div>

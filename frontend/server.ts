@@ -54,7 +54,72 @@ async function startServer() {
 
   let applications = [];
 
+  let categories = [
+    { id: '1', name: 'Design', icon: 'Palette' },
+    { id: '2', name: 'Technology', icon: 'Code' },
+    { id: '3', name: 'Marketing', icon: 'Megaphone' },
+    { id: '4', name: 'Sales', icon: 'BarChart' },
+    { id: '5', name: 'Finance', icon: 'DollarSign' }
+  ];
+
+  let jobTypes = [
+    { id: '1', name: 'Full-time' },
+    { id: '2', name: 'Part-time' },
+    { id: '3', name: 'Contract' },
+    { id: '4', name: 'Remote' }
+  ];
+
+  let experienceLevels = [
+    { id: '1', name: 'Junior' },
+    { id: '2', name: 'Mid' },
+    { id: '3', name: 'Senior' },
+    { id: '4', name: 'Lead' }
+  ];
+
   // API routes
+  app.get("/api/categories", (req, res) => {
+    res.json(categories);
+  });
+
+  app.post("/api/categories", (req, res) => {
+    const newCategory = {
+      ...req.body,
+      id: Math.random().toString(36).substr(2, 9)
+    };
+    categories.push(newCategory);
+    res.status(201).json(newCategory);
+  });
+
+  app.get("/api/job-types", (req, res) => {
+    res.json(jobTypes);
+  });
+
+  app.post("/api/job-types", (req, res) => {
+    const newJobType = {
+      ...req.body,
+      id: Math.random().toString(36).substr(2, 9)
+    };
+    jobTypes.push(newJobType);
+    res.status(201).json(newJobType);
+  });
+
+  app.get("/api/experience-levels", (req, res) => {
+    res.json(experienceLevels);
+  });
+
+  app.post("/api/experience-levels", (req, res) => {
+    const newExperienceLevel = {
+      ...req.body,
+      id: Math.random().toString(36).substr(2, 9)
+    };
+    experienceLevels.push(newExperienceLevel);
+    res.status(201).json(newExperienceLevel);
+  });
+
+  app.get("/api/taxonomies", (req, res) => {
+    res.json({ categories, jobTypes, experienceLevels });
+  });
+
   app.get("/api/jobs", (req, res) => {
     res.json(jobs);
   });
