@@ -27,6 +27,11 @@ export interface Application {
   resumeUrl: string;
   coverNote: string;
   appliedAt: string;
+  job?: {
+    title: string;
+    company: string;
+    logo?: string;
+  };
 }
 
 export interface TaxonomyItem {

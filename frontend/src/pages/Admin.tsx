@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Trash2, LayoutDashboard, Briefcase, Calendar, Building2, MapPin, X } from 'lucide-react';
+import { Plus, Trash2, LayoutDashboard, Briefcase, Calendar, Building2, MapPin, X, Users } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { motion, AnimatePresence } from 'motion/react';
-import { Job, TaxonomyResponse } from '../types';
-import { jobApi, taxonomyApi } from '../lib/api';
+import { Job, TaxonomyResponse, Application } from '../types';
+import { jobApi, taxonomyApi, applicationApi } from '../lib/api';
 import { cn } from '../lib/utils';
 
 const jobSchema = z.object({
@@ -25,7 +25,10 @@ export default function Admin() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [taxonomies, setTaxonomies] = useState<TaxonomyResponse>({ categories: [], jobTypes: [], experienceLevels: [] });
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingApps, setIsLoadingApps] = useState(true);
   const [isAdding, setIsAdding] = useState(false);
+  const [activeTab, setActiveTab] = useState<'jobs' | 'applications'>('jobs');
+  const [applications, setApplications] = useState<Application[]>([]);
 
   const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<JobFormData>({
     resolver: zodResolver(jobSchema),
@@ -60,9 +63,21 @@ export default function Admin() {
     }
   };
 
+  const fetchApplications = async () => {
+    try {
+      const data = await applicationApi.getAll();
+      setApplications(data);
+    } catch (error) {
+      console.error("Failed to fetch applications:", error);
+    } finally {
+      setIsLoadingApps(false);
+    }
+  };
+
   useEffect(() => {
     fetchJobs();
     fetchTaxonomies();
+    fetchApplications();
   }, []);
 
   const onDelete = async (id: string) => {
@@ -115,8 +130,26 @@ export default function Admin() {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="flex gap-4 mb-6">
+          <button 
+            onClick={() => setActiveTab('jobs')}
+            className={cn("px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2", activeTab === 'jobs' ? "bg-primary text-white shadow-lg shadow-primary/20" : "bg-white text-text-muted hover:bg-gray-50 border border-gray-100")}
+          >
+            <Briefcase className="w-4 h-4" />
+            Job Listings
+          </button>
+          <button 
+            onClick={() => setActiveTab('applications')}
+            className={cn("px-6 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2", activeTab === 'applications' ? "bg-primary text-white shadow-lg shadow-primary/20" : "bg-white text-text-muted hover:bg-gray-50 border border-gray-100")}
+          >
+            <Users className="w-4 h-4" />
+            Applicants
+          </button>
+        </div>
+
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
+            {activeTab === 'jobs' && (
             <table className="w-full text-left">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-100">
@@ -169,6 +202,66 @@ export default function Admin() {
                 )}
               </tbody>
             </table>
+            )}
+
+            {activeTab === 'applications' && (
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-100">
+                    <th className="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">Applicant & Job</th>
+                    <th className="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">Contact</th>
+                    <th className="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider">Date Applied</th>
+                    <th className="px-6 py-4 text-xs font-bold text-text-muted uppercase tracking-wider text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {isLoadingApps ? (
+                    <tr><td colSpan={4} className="px-6 py-12 text-center text-text-muted">Loading applications...</td></tr>
+                  ) : applications.length === 0 ? (
+                    <tr><td colSpan={4} className="px-6 py-12 text-center text-text-muted">No applications found.</td></tr>
+                  ) : (
+                    applications.map((app) => (
+                      <tr key={app.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-lg bg-white border border-gray-100 flex items-center justify-center p-1.5 flex-shrink-0">
+                              {app.job?.logo ? (
+                                <img src={app.job.logo} alt={app.job?.company} className="w-full h-full object-contain" referrerPolicy="no-referrer" />
+                              ) : (
+                                <Building2 className="w-5 h-5 text-gray-400" />
+                              )}
+                            </div>
+                            <div>
+                              <p className="font-bold text-text-main">{app.userName}</p>
+                              <p className="text-xs text-text-muted mt-0.5">Applied to: <span className="font-medium text-text-main">{app.job?.title}</span> at {app.job?.company}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <p className="text-sm font-medium text-text-main">{app.userEmail}</p>
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-2 text-sm text-text-muted">
+                            <Calendar className="w-4 h-4" />
+                            {app.appliedAt}
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <a 
+                            href={app.resumeUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary font-bold text-sm rounded-lg hover:bg-primary/20 transition-colors"
+                          >
+                            View Resume
+                          </a>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
       </div>

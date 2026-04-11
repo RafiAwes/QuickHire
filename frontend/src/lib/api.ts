@@ -26,6 +26,10 @@ export const jobApi = {
 };
 
 export const applicationApi = {
+  getAll: async () => {
+    const response = await api.get('/applications');
+    return response.data.data ? response.data.data : response.data;
+  },
   submit: async (application: Omit<Application, 'id' | 'appliedAt'>) => {
     const response = await api.post('/applications', application);
     return response.data.data ? response.data.data : response.data;
