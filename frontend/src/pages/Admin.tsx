@@ -88,7 +88,20 @@ export default function Admin() {
       setJobs(jobs.filter(j => j.id !== id));
     } catch (error: any) {
       console.error("Delete failed:", error);
-      const message = error.response?.data?.message || "Failed to delete the job. Please try again.";
+      
+      let message = "Failed to delete the job. Please try again.";
+      
+      if (error.response) {
+        // The server responded with a status code that falls out of the range of 2xx
+        message = `Server Error: ${error.response.data?.message || error.response.statusText || "Unknown error"}`;
+      } else if (error.request) {
+        // The request was made but no response was received (e.g. CORS, Network Error)
+        message = "Network Error: Could not reach the server. This may be caused by a CORS policy block or a broken connection.";
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        message = `Error: ${error.message}`;
+      }
+      
       alert(message);
     }
   };
