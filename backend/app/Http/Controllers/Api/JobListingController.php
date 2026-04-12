@@ -24,13 +24,23 @@ class JobListingController extends Controller
      */
     public function index(): JsonResponse
     {
-        // Eager load relationships for optimization (avoids N+1 query problem)
-        $jobs = JobListing::with(['category', 'jobType', 'experienceLevel'])
-            ->where('is_active', true)
-            ->latest()
-            ->get();
+        try {
+            // Eager load relationships for optimization (avoids N+1 query problem)
+            $jobs = JobListing::with(['category', 'jobType', 'experienceLevel'])
+                ->where('is_active', true)
+                ->latest()
+                ->get();
 
-        return response()->json(JobListingResource::collection($jobs));
+            return response()->json(JobListingResource::collection($jobs));
+        } catch (\Exception $e) {
+            \Log::error('JobListingController Error: ' . $e->getMessage(), [
+                'exception' => $e
+            ]);
+            return response()->json([
+                'error' => 'An unexpected error occurred.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

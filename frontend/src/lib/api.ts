@@ -7,6 +7,20 @@ const api = axios.create({
   baseURL: API_URL,
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    console.error('API Error:', {
+      url: error.config?.url,
+      method: error.config?.method,
+      status: error.response?.status,
+      data: error.response?.data,
+      message: error.message,
+    });
+    return Promise.reject(error);
+  }
+);
+
 export const jobApi = {
   getAll: async () => {
     const response = await api.get('/jobs');
