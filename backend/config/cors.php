@@ -19,7 +19,9 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        env('FRONTEND_URL', 'https://quick-hire-xi.vercel.app'),
+    ],
 
     'allowed_origins_patterns' => [],
 
