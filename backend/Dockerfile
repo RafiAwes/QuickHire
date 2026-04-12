@@ -19,7 +19,7 @@ WORKDIR /var/www
 COPY . .
 
 # Install dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN COMPOSER_MEMORY_LIMIT=-1 composer install --no-dev --optimize-autoloader --no-scripts
 
 # Expose the port Render assigns
 EXPOSE $PORT
