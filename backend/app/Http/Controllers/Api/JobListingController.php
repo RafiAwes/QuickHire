@@ -80,11 +80,31 @@ class JobListingController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
-        \Log::info("Attempting to delete job with ID: $id");
-        $job = JobListing::findOrFail($id);
-        $job->delete();
-        \Log::info("Successfully deleted job with ID: $id");
+        try {
+            \Log::info("Attempting to delete job with ID: $id");
+            
+            $job = JobListing::find($id);
+            
+            if (!$job) {
+                \Log::warning("Deletion failed: Job with ID $id not found.");
+                return response()->json([
+                    'error' => 'Job not found.',
+                    'message' => "Could not find a job listing with ID $id"
+                ], 404);
+            }
 
-        return response()->json(null, 204);
+            $job->delete();
+            \Log::info("Successfully deleted job with ID: $id");
+
+            return response()->json(null, 204);
+        } catch (\Exception $e) {
+            \Log::error("Deletion failed for job ID $id: " . $e->getMessage(), [
+                'exception' => $e
+            ]);
+            return response()->json([
+                'error' => 'Deletion failed.',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 }

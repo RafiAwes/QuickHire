@@ -20,7 +20,9 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        env('FRONTEND_URL', 'https://quick-hire-xi.vercel.app'), '*'
+        env('FRONTEND_URL', 'https://quick-hire-xi.vercel.app'),
+        'http://localhost:5173',
+        'http://localhost:3000',
     ],
 
     'allowed_origins_patterns' => [],

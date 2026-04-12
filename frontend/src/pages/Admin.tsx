@@ -86,9 +86,10 @@ export default function Admin() {
     try {
       await jobApi.delete(id);
       setJobs(jobs.filter(j => j.id !== id));
-    } catch (error) {
+    } catch (error: any) {
       console.error("Delete failed:", error);
-      alert("Failed to delete the job. Please try again.");
+      const message = error.response?.data?.message || "Failed to delete the job. Please try again.";
+      alert(message);
     }
   };
 
