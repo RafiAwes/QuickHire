@@ -80,8 +80,10 @@ class JobListingController extends Controller
      */
     public function destroy(string $id): JsonResponse
     {
+        \Log::info("Attempting to delete job with ID: $id");
         $job = JobListing::findOrFail($id);
         $job->delete();
+        \Log::info("Successfully deleted job with ID: $id");
 
         return response()->json(null, 204);
     }
