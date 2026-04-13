@@ -38,6 +38,81 @@ php artisan serve
 
 ---
 
+## 📖 API Reference
+
+The API follows RESTful conventions and returns JSON responses.
+
+### Base URL
+`http://localhost:8000/api` (Local)
+
+### 💼 Job Listing Endpoints
+
+#### 1. Retrieve All Jobs
+- **Endpoint**: `GET /jobs`
+- **Response**: List of active job listings with categories and types.
+
+#### 2. Create Job Listing
+- **Endpoint**: `POST /jobs`
+- **Request Body**:
+  ```json
+  {
+    "title": "Senior Developer",
+    "company": "Tech Corp",
+    "location": "New York, NY",
+    "category": "Technology",
+    "description": "Full job description...",
+    "type": "Full-time",
+    "level": "Senior",
+    "salary": "$120k - $150k",
+    "logo": "https://example.com/logo.png"
+  }
+  ```
+
+#### 3. View Job Details
+- **Endpoint**: `GET /jobs/{id}`
+- **Response**: Single job listing object.
+
+#### 4. Delete Job
+- **Endpoint**: `DELETE /jobs/{id}`
+
+---
+
+### 📄 Job Application Endpoints
+
+#### 1. Submit Application
+- **Endpoint**: `POST /applications`
+- **Request Body**:
+  ```json
+  {
+    "jobId": "uuid-string",
+    "userName": "John Doe",
+    "userEmail": "john@example.com",
+    "resumeUrl": "https://example.com/resume.pdf",
+    "coverNote": "I am excited to apply..."
+  }
+  ```
+
+#### 2. View All Applications
+- **Endpoint**: `GET /applications`
+- **Response**: List of all submitted applications.
+
+---
+
+### 🏷️ Taxonomy Endpoints
+
+#### 1. Get Categories & Types
+- **Endpoint**: `GET /taxonomies`
+- **Response**:
+  ```json
+  {
+    "categories": [...],
+    "jobTypes": [...],
+    "experienceLevels": [...]
+  }
+  ```
+
+---
+
 ## 🏗️ Core Components
 
 ### Controllers
