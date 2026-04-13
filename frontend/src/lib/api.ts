@@ -35,7 +35,9 @@ export const jobApi = {
     return response.data.data ? response.data.data : response.data;
   },
   delete: async (id: string) => {
-    await api.delete(`jobs/${id}`);
+    await api.post(`jobs/${id}`, {
+      _method: 'DELETE'
+    });
   },
 };
 
