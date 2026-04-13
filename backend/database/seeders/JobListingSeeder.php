@@ -25,6 +25,7 @@ class JobListingSeeder extends Seeder
         }
 
         $jobs = [
+            // Technology
             [
                 'title' => 'Senior Frontend Developer',
                 'company' => 'Stripe',
@@ -37,6 +38,18 @@ class JobListingSeeder extends Seeder
                 'experience_level_id' => $levels['Senior'] ?? array_values($levels)[0],
             ],
             [
+                'title' => 'DevOps Engineer',
+                'company' => 'HashiCorp',
+                'logo' => 'https://www.vectorlogo.zone/logos/hashicorp/hashicorp-icon.svg',
+                'description' => '<p>Help us build the next generation of infrastructure automation tools. Experience with Terraform, Vault, and Nomad is a plus.</p>',
+                'location' => 'Remote',
+                'salary' => '$150k - $190k',
+                'category_id' => $categories['Technology'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Remote'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
+            ],
+            // Design
+            [
                 'title' => 'Product Designer',
                 'company' => 'Airbnb',
                 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/6/69/Airbnb_Logo_B%C3%A9lo.svg',
@@ -47,6 +60,18 @@ class JobListingSeeder extends Seeder
                 'job_type_id' => $jobTypes['Remote'] ?? array_values($jobTypes)[0],
                 'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
             ],
+            [
+                'title' => 'Brand Designer',
+                'company' => 'Figma',
+                'logo' => 'https://www.vectorlogo.zone/logos/figma/figma-icon.svg',
+                'description' => '<p>Help us evolve the Figma brand. You will work on marketing campaigns, product illustrations, and brand systems.</p>',
+                'location' => 'San Francisco, CA',
+                'salary' => '$110k - $140k',
+                'category_id' => $categories['Design'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Senior'] ?? array_values($levels)[0],
+            ],
+            // Sales
             [
                 'title' => 'Enterprise Sales Lead',
                 'company' => 'Salesforce',
@@ -59,6 +84,18 @@ class JobListingSeeder extends Seeder
                 'experience_level_id' => $levels['Lead'] ?? array_values($levels)[0],
             ],
             [
+                'title' => 'Account Executive',
+                'company' => 'HubSpot',
+                'logo' => 'https://www.vectorlogo.zone/logos/hubspot/hubspot-icon.svg',
+                'description' => '<p>Manage relationships with key accounts and drive growth within our platform ecosystem.</p>',
+                'location' => 'Boston, MA',
+                'salary' => '$90k - $120k',
+                'category_id' => $categories['Sales'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
+            ],
+            // Engineering
+            [
                 'title' => 'Backend Engineering Intern',
                 'company' => 'Vercel',
                 'logo' => 'https://assets.vercel.com/image/upload/v1588805858/repositories/vercel/logo.png',
@@ -69,6 +106,18 @@ class JobListingSeeder extends Seeder
                 'job_type_id' => $jobTypes['Part-time'] ?? array_values($jobTypes)[0],
                 'experience_level_id' => $levels['Junior'] ?? array_values($levels)[0],
             ],
+            [
+                'title' => 'Full Stack Engineer',
+                'company' => 'Linear',
+                'logo' => 'https://www.vectorlogo.zone/logos/linear/linear-icon.svg',
+                'description' => '<p>Build the future of project management. We are a small, focused team looking for engineers who care deeply about craft.</p>',
+                'location' => 'Remote',
+                'salary' => '$160k - $200k',
+                'category_id' => $categories['Engineering'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Remote'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Senior'] ?? array_values($levels)[0],
+            ],
+            // Marketing
             [
                 'title' => 'Growth Automation Marketer',
                 'company' => 'Notion',
@@ -81,6 +130,18 @@ class JobListingSeeder extends Seeder
                 'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
             ],
             [
+                'title' => 'Content Strategist',
+                'company' => 'Ghost',
+                'logo' => 'https://www.vectorlogo.zone/logos/ghost/ghost-icon.svg',
+                'description' => '<p>Define our content strategy and help publishers succeeds with modern publishing tools.</p>',
+                'location' => 'Remote',
+                'salary' => '$80k - $100k',
+                'category_id' => $categories['Marketing'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
+            ],
+            // Finance
+            [
                 'title' => 'VP of Finance',
                 'company' => 'Coinbase',
                 'logo' => 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Coinbase_Logo_2013.v1.svg',
@@ -90,6 +151,63 @@ class JobListingSeeder extends Seeder
                 'category_id' => $categories['Finance'] ?? array_values($categories)[0],
                 'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
                 'experience_level_id' => $levels['Lead'] ?? array_values($levels)[0],
+            ],
+            [
+                'title' => 'Senior Accountant',
+                'company' => 'Mercury',
+                'logo' => 'https://www.vectorlogo.zone/logos/mercury/mercury-icon.svg',
+                'description' => '<p>Join our finance team to manage accounting operations for a fast-growing banking platform.</p>',
+                'location' => 'San Francisco, CA',
+                'salary' => '$100k - $130k',
+                'category_id' => $categories['Finance'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Senior'] ?? array_values($levels)[0],
+            ],
+            // Business
+            [
+                'title' => 'Operations Manager',
+                'company' => 'Uber',
+                'logo' => 'https://upload.wikimedia.org/wikipedia/commons/5/58/Uber_logo_2018.svg',
+                'description' => '<p>Optimize our market operations and driver engagement strategies.</p>',
+                'location' => 'Chicago, IL',
+                'salary' => '$120k - $150k',
+                'category_id' => $categories['Business'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
+            ],
+            [
+                'title' => 'Strategy Consultant',
+                'company' => 'McKinsey',
+                'logo' => 'https://upload.wikimedia.org/wikipedia/commons/4/4e/McKinsey_%26_Company_logo.svg',
+                'description' => '<p>Advise top-tier clients on their most critical business challenges.</p>',
+                'location' => 'London, UK',
+                'salary' => '$140k - $180k',
+                'category_id' => $categories['Business'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Lead'] ?? array_values($levels)[0],
+            ],
+            // Human Resources
+            [
+                'title' => 'People Ops Manager',
+                'company' => 'Remote',
+                'logo' => 'https://www.vectorlogo.zone/logos/remote/remote-icon.svg',
+                'description' => '<p>Help us scale our remote-first culture and employee experience programs.</p>',
+                'location' => 'Remote',
+                'salary' => '$110k - $140k',
+                'category_id' => $categories['Human Resources'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Remote'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
+            ],
+            [
+                'title' => 'Talent Acquisition Specialist',
+                'company' => 'Deel',
+                'logo' => 'https://www.vectorlogo.zone/logos/letsdeel/letsdeel-icon.svg',
+                'description' => '<p>Identify and hire top talent for our fast-growing global team.</p>',
+                'location' => 'Remote',
+                'salary' => '$90k - $120k',
+                'category_id' => $categories['Human Resources'] ?? array_values($categories)[0],
+                'job_type_id' => $jobTypes['Full-time'] ?? array_values($jobTypes)[0],
+                'experience_level_id' => $levels['Mid'] ?? array_values($levels)[0],
             ],
         ];
 

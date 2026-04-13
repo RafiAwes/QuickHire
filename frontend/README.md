@@ -1,20 +1,58 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# QuickHire Frontend
 
-# Run and deploy your AI Studio app
+This is the React-based frontend for the QuickHire job portal. It's a modern, high-performance Web application built with React 19 and Vite.
 
-This contains everything you need to run your app locally.
+## 🔗 Project Links
+- **[Main Project README](../README.md)** - Full project documentation and architecture.
 
-View your app in AI Studio: https://ai.studio/apps/0e42ad0a-5bd4-4d12-a7f0-900bf0eb1a8d
+## ✨ Features
+- **Modern UI**: Clean, aesthetic design powered by Tailwind CSS 4.
+- **Fluid Animations**: Smooth transitions and micro-interactions with Framer Motion.
+- **Form Management**: Robust validation using React Hook Form and Zod.
+- **Rich Text Editing**: Professional Job Listing creation with Tiptap.
+- **Type Safety**: Fully typed with TypeScript.
 
-## Run Locally
+## 🛠️ Tech Stack
+- **Framework**: React 19
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS 4
+- **Routing**: React Router 7
+- **Icons**: Lucide React
+- **Animations**: Framer Motion
 
-**Prerequisites:**  Node.js
+## 🚀 Setup & Local Development
 
+### 1. Installation
+```powershell
+npm install
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### 2. Environment Configuration
+Copy the `.env.example` file:
+```powershell
+copy .env.example .env.local
+```
+Update `VITE_API_URL` to point to your backend API.
+
+### 3. Running the App
+```powershell
+npm run dev
+```
+
+### 4. Build for Production
+```powershell
+npm run build
+```
+
+---
+
+## 📁 Project Structure
+
+- `src/components`: Reusable UI components.
+- `src/pages`: Main application views (Home, Jobs, JobDetails, Admin).
+- `src/lib`: API clients and utility functions.
+- `src/types`: TypeScript interfaces and types.
+- `server.ts`: Development server and optional mock API.
+
+## 📄 License
+This project is open-sourced software licensed under the **MIT license**.
