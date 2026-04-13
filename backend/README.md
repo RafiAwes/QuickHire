@@ -6,7 +6,7 @@ This is the Laravel-based backend for the QuickHire job portal. It provides a ro
 - **[Main Project README](../README.md)** - Full project documentation and architecture.
 
 ## 🛠️ Tech Stack
-- **Framework**: Laravel 11
+- **Framework**: Laravel 12
 - **Database**: MySQL / TiDB Cloud
 - **ORM**: Eloquent
 - **API Resources**: Laravel JSON Resources
