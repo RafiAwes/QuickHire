@@ -96,7 +96,10 @@ class JobListingController extends Controller
             $job->delete();
             \Log::info("Successfully deleted job with ID: $id");
 
-            return response()->json(null, 204);
+            return response()->json([
+                "success" => true,
+                "message" => "Job deleted successfully"
+            ], 200);
         } catch (\Exception $e) {
             \Log::error("Deletion failed for job ID $id: " . $e->getMessage(), [
                 'exception' => $e
