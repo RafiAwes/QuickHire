@@ -9,7 +9,8 @@ This is the Laravel-based backend for the QuickHire job portal. It provides a ro
 - **Framework**: Laravel 12
 - **Database**: MySQL / TiDB Cloud
 - **ORM**: Eloquent
-- **API Resources**: Laravel JSON Resources
+- **API Resources**: Laravel JSON Resource
+s
 - **Services**: Service-Layer pattern for business logic.
 
 ## 🚀 Setup & Local Development

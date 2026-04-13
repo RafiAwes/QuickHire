@@ -13,7 +13,7 @@
 
 **QuickHire** is a full-stack job portal designed for high performance and premium user experience. It provides a seamless interface for job seekers to discover opportunities and for administrators to manage job listings and applications with ease.
 
-Built with **React 19** on the frontend and **Laravel 11** on the backend, QuickHire leverages modern web standards to provide a responsive, fast, and interactive platform.
+Built with **React 19** on the frontend and **Laravel 12** on the backend, QuickHire leverages modern web standards to provide a responsive, fast, and interactive platform.
 
 ---
 
@@ -45,7 +45,7 @@ Built with **React 19** on the frontend and **Laravel 11** on the backend, Quick
 - **API Client**: Axios
 
 ### Backend
-- **Framework**: Laravel 11 (PHP 8.2+)
+- **Framework**: Laravel 12 (PHP 8.2+)
 - **API**: RESTful API with JSON Resources
 - **Database**: MySQL / TiDB Cloud
 - **State Management**: Eloquent ORM
